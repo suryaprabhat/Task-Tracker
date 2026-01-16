@@ -9,15 +9,23 @@ const mongoose = require("mongoose");
 const app = express();
 
 // ✅ CORS FIRST
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://task-tracker-ec3o.vercel.app",
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://q1wwsr42-5173.inc1.devtunnels.ms",
-      "https://task-tracker-ec3o.vercel.app"
-    ],
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    origin: function (origin, callback) {
+      // allow requests with no origin (mobile apps, curl, etc.)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("CORS not allowed"), false);
+      }
+    },
     credentials: true,
   })
 );
