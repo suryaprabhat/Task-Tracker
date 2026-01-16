@@ -29,7 +29,7 @@ app.use(
 );
 
 // ✅ REQUIRED for preflight
-app.options("*", cors());
+app.use(cors());
 
 /* ===== BODY PARSER ===== */
 app.use(express.json());
