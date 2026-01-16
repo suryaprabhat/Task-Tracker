@@ -7,6 +7,8 @@ type Props = {
   onUpdate: () => void;
 };
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export default function TaskItem({ task, onUpdate }: Props) {
   const isDaily = task.type === "daily";
   const token = localStorage.getItem("token");
@@ -15,8 +17,13 @@ export default function TaskItem({ task, onUpdate }: Props) {
     if (!token || task.completedToday) return;
 
     const res = await fetch(
-      `http://localhost:5000/api/tasks/${task._id}`,
-      { method: "PATCH", headers: { Authorization: `Bearer ${token}` } }
+      `${API_BASE_URL}/api/tasks/${task._id}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
     if (!res.ok) {
@@ -25,7 +32,7 @@ export default function TaskItem({ task, onUpdate }: Props) {
     }
 
     confetti({ particleCount: 80, spread: 60 });
-    toast.success("Daily task completed");
+    toast.success("Daily task completed 🔥");
     onUpdate();
   };
 
@@ -33,8 +40,13 @@ export default function TaskItem({ task, onUpdate }: Props) {
     if (!token) return;
 
     const res = await fetch(
-      `http://localhost:5000/api/tasks/${task._id}`,
-      { method: "DELETE", headers: { Authorization: `Bearer ${token}` } }
+      `${API_BASE_URL}/api/tasks/${task._id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
 
     if (!res.ok) {
