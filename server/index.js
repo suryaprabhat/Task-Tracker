@@ -14,6 +14,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://q1wwsr42-5173.inc1.devtunnels.ms",
+      "https://task-tracker-ec3o.vercel.app/"
     ],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
