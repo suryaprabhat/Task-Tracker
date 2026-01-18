@@ -7,30 +7,34 @@ const connectDB = require("./config/db");
 
 const app = express();
 
-/* ===== CORS (FIRST) ===== */
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://task-tracker-ec3o.vercel.app",
-  "http://task-tracker-five-zeta.vercel.app"
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
+      // Allow non-browser tools (Postman, curl, mobile apps)
       if (!origin) return callback(null, true);
 
+      // Allow localhost
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
-      } else {
-        return callback(new Error("CORS not allowed"));
       }
+
+      // ✅ Allow ALL Vercel preview + production URLs
+      if (origin.endsWith(".vercel.app")) {
+        return callback(null, true);
+      }
+
+      // ❌ Block everything else
+      return callback(new Error(`CORS blocked: ${origin}`), false);
     },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-
-// ✅ REQUIRED for preflight
-app.use(cors());
 
 /* ===== BODY PARSER ===== */
 app.use(express.json());
