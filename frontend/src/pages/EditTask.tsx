@@ -21,7 +21,7 @@ export default function EditTask({ task, onClose, onUpdated }: Props) {
 
   const save = async () => {
     const res = await fetch(
-      `http://localhost:5000/api/tasks/${task._id}`,
+      `http://:5000/api/tasks/${task._id}`,
       {
         method: "PATCH",
         headers: {

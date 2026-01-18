@@ -7,7 +7,7 @@ type Props = {
   onUpdate: () => void;
 };
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { API_BASE_URL } from "../config";
 
 export default function TaskItem({ task, onUpdate }: Props) {
   const isDaily = task.type === "daily";

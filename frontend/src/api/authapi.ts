@@ -1,13 +1,12 @@
 import axios from "axios";
 
-const API = "http://localhost:5000/api/auth";
-
+import { API_BASE_URL } from "../config";
 
 export const loginUser = async (data: {
   email: string;
   password: string;
 }) => {
-  const res = await axios.post(`${API}/login`, data);
+  const res = await axios.post(`${API_BASE_URL}/login`, data);
   return res.data; // { token, user }
 };
 
@@ -16,7 +15,7 @@ export async function signupUser(data: {
   email: string;
   password: string;
 }) {
-  const res = await fetch("http://localhost:5000/api/auth/signup", {
+  const res = await fetch(`${API_BASE_URL}/api/auth/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

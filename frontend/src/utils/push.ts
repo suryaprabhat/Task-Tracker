@@ -8,6 +8,8 @@ const urlBase64ToUint8Array = (base64String: string) => {
   return Uint8Array.from([...rawData].map((c) => c.charCodeAt(0)));
 };
 
+import { API_BASE_URL } from "../config";
+
 export const subscribeUserToPush = async () => {
   if (!("serviceWorker" in navigator)) return;
   if (!("PushManager" in window)) return;
@@ -32,7 +34,7 @@ export const subscribeUserToPush = async () => {
     applicationServerKey: urlBase64ToUint8Array(publicKey),
   });
 
-  const res = await fetch("http://localhost:5000/api/subscriptions", {
+  const res = await fetch(`${API_BASE_URL}/api/subscriptions`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(subscription),

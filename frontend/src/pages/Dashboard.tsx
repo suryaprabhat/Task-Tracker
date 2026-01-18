@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card"
 import AddTask from "../components/AddTask";
 import TaskSection from "../components/TaskSection";
 import { useAuth } from "../context/AuthContext";
+import { API_BASE_URL } from "../config";
 
 type Task = {
   _id: string;
@@ -20,7 +21,7 @@ export default function Dashboard() {
   const fetchTasks = async () => {
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:5000/api/tasks", {
+      const res = await fetch(`${API_BASE_URL}/api/tasks`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

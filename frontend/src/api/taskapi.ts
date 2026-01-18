@@ -1,7 +1,9 @@
+import { API_BASE_URL } from "../config";
+
 export async function createTask(task: any) {
   const token = localStorage.getItem("token");
 
-  const res = await fetch("http://localhost:5000/api/tasks", {
+  const res = await fetch(`${API_BASE_URL}/api/tasks`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

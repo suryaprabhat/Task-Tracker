@@ -9,6 +9,8 @@ import {
   SelectValue,
 } from "./ui/select";
 
+import { API_BASE_URL } from "../config";
+
 type Props = {
   onTaskAdded: () => void;
 };
@@ -44,7 +46,7 @@ export default function AddTask({ onTaskAdded }: Props) {
     const reminderAt = computeReminderAt();
     if (!reminderAt) return alert("Invalid reminder time");
 
-    const res = await fetch("http://localhost:5000/api/tasks", {
+    const res = await fetch(`${API_BASE_URL}/api/tasks`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
