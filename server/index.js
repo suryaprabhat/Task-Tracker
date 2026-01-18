@@ -11,6 +11,7 @@ const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
   "https://task-tracker-ec3o.vercel.app",
+  "http://task-tracker-five-zeta.vercel.app"
 ];
 
 app.use(
