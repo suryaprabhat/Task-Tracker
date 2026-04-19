@@ -11,7 +11,7 @@ import {
 
 import { createTask } from "../api/taskapi";
 import { toast } from "sonner";
-import { PlusCircle, AlarmClock, CalendarDays, Tag, Loader2 } from "lucide-react";
+import { PlusCircle, AlarmClock, CalendarDays, Tag, Loader2, Briefcase, Home, Heart, Landmark, GraduationCap, Folder, Zap } from "lucide-react";
 
 type Props = {
   onTaskAdded: () => void;
@@ -20,6 +20,8 @@ type Props = {
 export default function AddTask({ onTaskAdded }: Props) {
   const [title, setTitle] = useState("");
   const [type, setType] = useState<"daily" | "temporary" | "ongoing">("daily");
+  const [category, setCategory] = useState("Other");
+  const [priority, setPriority] = useState("Medium");
   
   // States map nicely to our unified form but vary in requirement
   const [deadline, setDeadline] = useState("");
@@ -64,6 +66,8 @@ export default function AddTask({ onTaskAdded }: Props) {
     let payload: any = {
       title: title.trim(),
       type,
+      category,
+      priority,
       progress: 0,
     };
 
@@ -110,6 +114,8 @@ export default function AddTask({ onTaskAdded }: Props) {
       // Reset fields
       setTitle("");
       setType("daily");
+      setCategory("Other");
+      setPriority("Medium");
       setDeadline("");
       setDailyReminderTime("");
       setReminderOption("none");
@@ -145,6 +151,46 @@ export default function AddTask({ onTaskAdded }: Props) {
           onChange={(e) => setTitle(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && isReady && addTask()}
         />
+      </div>
+
+      {/* Category & Priority Row */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="flex flex-col gap-1.5">
+          <label className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-slate-400">
+            <span className="text-indigo-400">◈</span>
+            Category
+          </label>
+          <Select value={category} onValueChange={setCategory}>
+            <SelectTrigger className="w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Work">💼 Work</SelectItem>
+              <SelectItem value="Personal">🏠 Personal</SelectItem>
+              <SelectItem value="Health">❤️ Health</SelectItem>
+              <SelectItem value="Finance">💰 Finance</SelectItem>
+              <SelectItem value="Education">🎓 Education</SelectItem>
+              <SelectItem value="Other">📁 Other</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-slate-400">
+            <Zap className="h-3.5 w-3.5 text-amber-400" />
+            Priority
+          </label>
+          <Select value={priority} onValueChange={setPriority}>
+            <SelectTrigger className="w-full">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Low">🔵 Low</SelectItem>
+              <SelectItem value="Medium">🟡 Medium</SelectItem>
+              <SelectItem value="High">🔴 High</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {/* Type Row */}

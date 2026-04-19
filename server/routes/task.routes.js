@@ -24,7 +24,7 @@ function buildDailyReminderAt(timeStr) {
 // ── CREATE ───────────────────────────────────────────────────────────────────
 router.post("/", auth, async (req, res) => {
   try {
-    const { type, deadline, dailyReminderTime, reminderAt, ...rest } = req.body;
+    const { type, deadline, dailyReminderTime, reminderAt, category, priority, ...rest } = req.body;
 
     // Server-side type-specific validation
     if (type === "temporary" && !deadline) {
@@ -47,6 +47,8 @@ router.post("/", auth, async (req, res) => {
     const task = await Task.create({
       ...rest,
       type,
+      category: category || "Other",
+      priority: priority || "Medium",
       deadline: deadline || null,
       dailyReminderTime: type === "daily" ? (dailyReminderTime || null) : null,
       reminderAt: computedReminderAt,

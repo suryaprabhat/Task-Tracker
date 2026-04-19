@@ -16,7 +16,7 @@ exports.createTask = async (req, res) => {
       progress: progress ?? 0,
       reminderAt: reminderAt ? new Date(reminderAt) : undefined,
       dailyReminderTime: dailyReminderTime || null,
-      user: req.userId,
+      user: req.user.id,
     });
 
     res.status(201).json(task);
@@ -29,7 +29,7 @@ exports.createTask = async (req, res) => {
 // GET TASKS (LOGGED-IN USER ONLY)
 exports.getMyTasks = async (req, res) => {
   try {
-    const tasks = await Task.find({ user: req.userId }).sort({
+    const tasks = await Task.find({ user: req.user.id }).sort({
       createdAt: -1,
     });
     res.json(tasks);
@@ -47,7 +47,7 @@ exports.updateTask = async (req, res) => {
     }
 
     const task = await Task.findOneAndUpdate(
-      { _id: req.params.id, user: req.userId },
+      { _id: req.params.id, user: req.user.id },
       updates,
       { new: true }
     );
@@ -67,7 +67,7 @@ exports.deleteTask = async (req, res) => {
   try {
     const task = await Task.findOneAndDelete({
       _id: req.params.id,
-      user: req.userId,
+      user: req.user.id,
     });
 
     if (!task) {

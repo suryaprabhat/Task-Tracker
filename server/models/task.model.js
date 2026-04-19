@@ -14,6 +14,16 @@ const taskSchema = new mongoose.Schema(
       enum: ["daily", "temporary", "ongoing"],
       required: true,
     },
+    category: {
+      type: String,
+      enum: ["Work", "Personal", "Health", "Finance", "Education", "Other"],
+      default: "Other",
+    },
+    priority: {
+      type: String,
+      enum: ["Low", "Medium", "High"],
+      default: "Medium",
+    },
 
     /* DEADLINE + REMINDER */
     deadline: {
