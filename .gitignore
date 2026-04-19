@@ -1,0 +1,14 @@
+# Root .gitignore
+node_modules/
+.env
+.env.*
+dist/
+build/
+*.log
+
+# Mac files
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
